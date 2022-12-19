@@ -5,20 +5,23 @@ import api from "./config/api";
 import { AxiosResponse } from "axios";
 
 function App() {
-  const [platform, setPlatform] = useState<string>("steam");
+  const [platform, setPlatform] = useState<string>("Steam");
   const [username, setUsername] = useState<string>("");
   const [results, setResults] = useState<any[]>([]);
 
   const getPlayerData = async (platform: string, playerUsername: string) => {
-    console.log('chamando aq')
+    console.log("chamando aq");
     await api
-      .get(`/search`, { params: { platform: platform, query: playerUsername } })
-      .then((response) => setResults(response.data));
+      .get(``, {
+        params: { platform: platform, query: playerUsername },
+      })
+      .then((response) => {
+        console.log(response.data);
+      });
   };
-
+  //https://public-api.tracker.gg/v2/csgo/standard/search?platform=steam&query=padawann__
   const handleSubmit = async (e: any) => {
-    e.preventDefault();
-    getPlayerData(platform, username)
+    getPlayerData(platform, username);
   };
 
   return (
@@ -48,7 +51,8 @@ function App() {
           />
         </p>
       </form>
-      <ul>{results}</ul>
+      <div>{results}</div>
+      
     </div>
   );
 }
